@@ -10,26 +10,16 @@ const LOGO_W = 'assets/logo-inv.png';
 /* ---------- данные (localStorage; для боевой версии заменить на worker/d1) ---------- */
 const SEED = {
   students: [
-    {code:'TCC-1001',name:'Алия',balance:120},
-    {code:'TCC-1002',name:'Ерлан',balance:45},
-    {code:'TCC-1003',name:'Дана',balance:300}
+    {code:'TCC-1001',name:'Алия',balance:25000},
+    {code:'TCC-1002',name:'Ерлан',balance:5000},
+    {code:'TCC-1003',name:'Дана',balance:150000}
   ],
-  products:[
-    {id:1,emoji:'☕',name:'Кофе в кафе рядом',cat:'Еда',price:30,stock:50},
-    {id:2,emoji:'🎟️',name:'Билет на movie night',cat:'События',price:60,stock:20},
-    {id:3,emoji:'✏️',name:'Набор канцелярии TCC',cat:'Мерч',price:80,stock:25},
-    {id:4,emoji:'👕',name:'Футболка с щитом',cat:'Мерч',price:350,stock:10},
-    {id:5,emoji:'🧢',name:'Кепка TCC',cat:'Мерч',price:220,stock:12},
-    {id:6,emoji:'🎒',name:'Шоппер Crocus',cat:'Мерч',price:150,stock:15},
-    {id:7,emoji:'🗣️',name:'Бесплатный speaking club',cat:'Занятия',price:100,stock:30},
-    {id:8,emoji:'📚',name:'Индивидуальный урок 45 мин',cat:'Занятия',price:400,stock:8},
-    {id:9,emoji:'💸',name:'Скидка 10% на следующий месяц',cat:'Занятия',price:600,stock:5}
-  ],
+  products:[{"id": 1, "emoji": "📱", "name": "iPhone Pro", "cat": "Техника", "price": 1080000, "stock": 2}, {"id": 2, "emoji": "📱", "name": "iPhone 16", "cat": "Техника", "price": 540000, "stock": 2}, {"id": 3, "emoji": "🎮", "name": "PlayStation 5 Slim с геймпадом", "cat": "Техника", "price": 420000, "stock": 2}, {"id": 4, "emoji": "🎮", "name": "PlayStation Portal", "cat": "Техника", "price": 180000, "stock": 2}, {"id": 5, "emoji": "⌚", "name": "Apple Watch", "cat": "Техника", "price": 300000, "stock": 3}, {"id": 6, "emoji": "🎧", "name": "AirPods Pro", "cat": "Техника", "price": 156000, "stock": 3}, {"id": 7, "emoji": "🎧", "name": "Наушники JBL", "cat": "Техника", "price": 19200, "stock": 6}, {"id": 8, "emoji": "📷", "name": "Instax mini с плёнкой", "cat": "Техника", "price": 84000, "stock": 4}, {"id": 9, "emoji": "🎙️", "name": "Беспроводной микрофон для телефона", "cat": "Техника", "price": 66000, "stock": 4}, {"id": 10, "emoji": "📽️", "name": "Мини-проектор", "cat": "Техника", "price": 47000, "stock": 3}, {"id": 11, "emoji": "💡", "name": "Софтбокс с лампой и штативом", "cat": "Техника", "price": 42000, "stock": 3}, {"id": 12, "emoji": "🔋", "name": "Повербанк Samsung", "cat": "Техника", "price": 18000, "stock": 8}, {"id": 13, "emoji": "💡", "name": "Подсветка-клипса для телефона", "cat": "Техника", "price": 3600, "stock": 15}, {"id": 14, "emoji": "🏐", "name": "Волейбольный мяч Mikasa V300W", "cat": "Спорт", "price": 20400, "stock": 5}, {"id": 15, "emoji": "⚽", "name": "Футбольный мяч adidas", "cat": "Спорт", "price": 19200, "stock": 5}, {"id": 16, "emoji": "🏀", "name": "Баскетбольный мяч Tarmak", "cat": "Спорт", "price": 18000, "stock": 5}, {"id": 17, "emoji": "🧥", "name": "Худи серое", "cat": "Одежда", "price": 18000, "stock": 10}, {"id": 18, "emoji": "👟", "name": "Кроссовки Jordan 1 Mid", "cat": "Одежда", "price": 108000, "stock": 3}, {"id": 19, "emoji": "🧦", "name": "Носки SpongeBob", "cat": "Одежда", "price": 4200, "stock": 20}, {"id": 20, "emoji": "🎒", "name": "Городской рюкзак", "cat": "Одежда", "price": 18000, "stock": 8}, {"id": 21, "emoji": "📓", "name": "Набор: блокнот и ручка", "cat": "Канцелярия", "price": 7200, "stock": 15}, {"id": 22, "emoji": "✏️", "name": "Набор ручек Naruto в папке", "cat": "Канцелярия", "price": 2400, "stock": 25}, {"id": 23, "emoji": "🖊️", "name": "Пенал", "cat": "Канцелярия", "price": 4800, "stock": 15}, {"id": 24, "emoji": "🥤", "name": "Dr Pepper", "cat": "Сладости", "price": 3000, "stock": 30}, {"id": 25, "emoji": "🥤", "name": "Газировка Odol Pikachu", "cat": "Сладости", "price": 4320, "stock": 20}, {"id": 26, "emoji": "🍬", "name": "Haribo Chamallows", "cat": "Сладости", "price": 2100, "stock": 30}, {"id": 27, "emoji": "🍬", "name": "Haribo Happy Cola", "cat": "Сладости", "price": 2040, "stock": 30}, {"id": 28, "emoji": "🍬", "name": "Haribo Worms Zourr", "cat": "Сладости", "price": 1800, "stock": 30}, {"id": 29, "emoji": "🍬", "name": "Bean Boozled", "cat": "Сладости", "price": 7200, "stock": 15}, {"id": 30, "emoji": "☕", "name": "Кружка Creeper", "cat": "Для дома", "price": 4200, "stock": 12}, {"id": 31, "emoji": "🥛", "name": "Стакан с трубочкой", "cat": "Для дома", "price": 3600, "stock": 12}],
   orders:[],tx:[]
 };
 const DB = {
-  get(){try{const d=JSON.parse(localStorage.getItem('tcc_db'));if(d)return d}catch(e){}const d=structuredClone(SEED);localStorage.setItem('tcc_db',JSON.stringify(d));return d},
-  set(d){try{localStorage.setItem('tcc_db',JSON.stringify(d))}catch(e){}},
+  get(){try{const d=JSON.parse(localStorage.getItem('tcc_db2'));if(d)return d}catch(e){}const d=structuredClone(SEED);localStorage.setItem('tcc_db2',JSON.stringify(d));return d},
+  set(d){try{localStorage.setItem('tcc_db2',JSON.stringify(d))}catch(e){}},
   me(){try{return sessionStorage.getItem('tcc_me')}catch(e){return null}},
   setMe(c){try{c?sessionStorage.setItem('tcc_me',c):sessionStorage.removeItem('tcc_me')}catch(e){}},
   user(){const c=this.me();return c?this.get().students.find(s=>s.code===c)||null:null},
@@ -41,6 +31,7 @@ const DB = {
     s.balance-=p.price;p.stock--;d.orders.unshift({id:Date.now(),code:s.code,name:s.name,item:p.name,price:p.price,status:'new',date:Date.now()});
     d.tx.unshift({code:s.code,amount:-p.price,reason:'Маркет: '+p.name,date:Date.now()});this.set(d);return 'ok'}
 };
+const num=n=>Number(n).toLocaleString('ru-RU');
 const fmt=t=>new Date(t).toLocaleDateString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const coinI=`<span class="coin"><img src="assets/coin.png" alt=""></span>`;
@@ -55,7 +46,7 @@ function layout(){
   document.body.insertAdjacentHTML('afterbegin',`<header class="site"><div class="wrap">
     <a class="brand" href="index.html"><img src="${LOGO}" alt="">The Crocus Community</a>
     <nav class="main" id="nav">${PAGES.map(([h,n])=>`<a href="${h}" class="${h===cur?'on':''}">${n}</a>`).join('')}
-      <a href="cabinet.html" class="me">${me?'Кабинет · '+esc(me.balance):'Войти'}</a></nav>
+      <a href="cabinet.html" class="me">${me?'Кабинет · '+num(me.balance):'Войти'}</a></nav>
     <button class="burger" aria-label="меню" onclick="document.getElementById('nav').classList.toggle('open')"><i></i><i></i></button></div></header>`);
   document.body.insertAdjacentHTML('beforeend',`<footer class="site"><div class="wrap"><div class="cols">
     <div><div class="brand"><img src="${LOGO_W}" alt="">The Crocus Community</div>
@@ -85,21 +76,21 @@ function loginModal(after){
 function initMarket(){
   const root=document.getElementById('shop');if(!root)return;let cat='Все';
   const draw=()=>{const d=DB.get(),me=DB.user();
-    document.getElementById('balbox').innerHTML=me?`<span class="bal">${coinI} ${me.balance}</span> <button class="btn ghost sm" id="out">Выйти</button>`:`<button class="btn blue sm" id="inb">Войти по коду</button>`;
+    document.getElementById('balbox').innerHTML=me?`<span class="bal">${coinI} ${num(me.balance)}</span> <button class="btn ghost sm" id="out">Выйти</button>`:`<button class="btn blue sm" id="inb">Войти по коду</button>`;
     const o=document.getElementById('out');if(o)o.onclick=()=>{DB.setMe(null);location.reload()};
     const i=document.getElementById('inb');if(i)i.onclick=()=>loginModal(()=>location.reload());
     const cats=['Все',...new Set(d.products.map(p=>p.cat))];
     document.getElementById('chips').innerHTML=cats.map(c=>`<button class="chip ${c===cat?'on':''}" data-c="${c}">${c}</button>`).join('');
     document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;draw()});
     root.innerHTML=d.products.filter(p=>cat==='Все'||p.cat===cat).map((p,i)=>`<div class="tk c${i%3}"><div class="l"><div><small>${esc(p.cat)}</small><h3>${esc(p.name)}</h3></div><div class="em">${p.emoji}</div></div>
-      <div class="stub"><div class="price">${p.price}${coinI}</div><div class="stock">${p.stock>0?'осталось '+p.stock:'нет в наличии'}</div><button class="btn sm" data-id="${p.id}" ${p.stock<1?'disabled':''}>Купить</button></div></div>`).join('');
+      <div class="stub"><div class="price" style="font-size:${String(p.price).length>=7?17:String(p.price).length>=6?21:String(p.price).length>=5?26:32}px">${num(p.price)}${coinI}</div><div class="stock">${p.stock>0?'осталось '+p.stock:'нет в наличии'}</div><button class="btn sm" data-id="${p.id}" ${p.stock<1?'disabled':''}>Купить</button></div></div>`).join('');
     root.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{
       const id=+b.dataset.id;const go=()=>{const r=DB.buy(id);
         if(r==='ok'){toast('Заказ оформлен! Заберите у администратора');draw();layoutBal()}
         else if(r==='money')toast('Не хватает коинов');else if(r==='stock')toast('Товар закончился');else loginModal(go)};
       go()})};
   draw()}
-function layoutBal(){const me=DB.user();const a=document.querySelector('nav.main a.me');if(a&&me)a.textContent='Кабинет · '+me.balance}
+function layoutBal(){const me=DB.user();const a=document.querySelector('nav.main a.me');if(a&&me)a.textContent='Кабинет · '+num(me.balance)}
 
 /* ---------- кабинет ---------- */
 function initCabinet(){
@@ -110,9 +101,9 @@ function initCabinet(){
       document.getElementById('cg').onclick=go;document.getElementById('cc').onkeydown=e=>e.key==='Enter'&&go();return}
     const d=DB.get(),tx=d.tx.filter(t=>t.code===me.code),ord=d.orders.filter(o=>o.code===me.code);
     root.innerHTML=`<div class="g2"><div class="panel"><b>${me.code}</b><h3 style="margin:12px 0 8px">${esc(me.name)}</h3>
-      <div class="cabnum">${me.balance} ${coinI}</div>
+      <div class="cabnum">${num(me.balance)} ${coinI}</div>
       <div style="margin-top:20px;display:flex;gap:10px"><a class="btn blue sm" href="market.html">В маркет</a><button class="btn ghost sm" id="lo">Выйти</button></div></div>
-      <div class="panel"><h3>Мои заказы</h3><table style="margin-top:10px">${ord.length?ord.map(o=>`<tr><td>${esc(o.item)}</td><td>${o.price}</td><td><span class="status ${o.status==='done'?'done':''}">${o.status==='done'?'выдан':'новый'}</span></td></tr>`).join(''):'<tr><td>Пока пусто</td></tr>'}</table></div></div>
+      <div class="panel"><h3>Мои заказы</h3><table style="margin-top:10px">${ord.length?ord.map(o=>`<tr><td>${esc(o.item)}</td><td>${num(o.price)}</td><td><span class="status ${o.status==='done'?'done':''}">${o.status==='done'?'выдан':'новый'}</span></td></tr>`).join(''):'<tr><td>Пока пусто</td></tr>'}</table></div></div>
       <div class="panel" style="margin-top:22px"><h3>История коинов</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Причина</th><th>Коины</th></tr>
       ${tx.length?tx.map(t=>`<tr><td>${fmt(t.date)}</td><td>${esc(t.reason)}</td><td class="${t.amount>0?'plus':'minus'}">${t.amount>0?'+':''}${t.amount}</td></tr>`).join(''):'<tr><td colspan=3>Операций пока нет</td></tr>'}</table></div>`;
     document.getElementById('lo').onclick=()=>{DB.setMe(null);location.reload()}};
@@ -130,14 +121,14 @@ function initAdmin(){
     const d=DB.get();
     root.innerHTML=`<div class="g2">
     <div class="panel"><h3>Начислить / списать коины</h3>
-      <label>Студент</label><select id="as">${d.students.map(s=>`<option value="${s.code}">${esc(s.name)} · ${s.code} · ${s.balance}</option>`).join('')}</select>
+      <label>Студент</label><select id="as">${d.students.map(s=>`<option value="${s.code}">${esc(s.name)} · ${s.code} · ${num(s.balance)}</option>`).join('')}</select>
       <label>Количество (минус — списать)</label><input id="aa" type="number" value="10">
       <label>Причина</label><select id="ar"><option>Посещение занятия</option><option>Домашнее задание</option><option>Победа в клубе</option><option>Активность</option><option>Другое</option></select>
       <button class="btn red" id="ago" style="margin-top:18px">Применить</button></div>
     <div class="panel"><h3>Новый студент</h3><label>Имя</label><input id="sn"><label>Код (оставьте пустым — создастся сам)</label><input id="sc" placeholder="TCC-1004">
       <button class="btn blue" id="sgo" style="margin-top:18px">Добавить</button></div></div>
     <div class="panel" style="margin-top:22px"><h3>Заказы</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Студент</th><th>Товар</th><th>Цена</th><th></th></tr>
-    ${d.orders.length?d.orders.map(o=>`<tr><td>${fmt(o.date)}</td><td>${esc(o.name)}</td><td>${esc(o.item)}</td><td>${o.price}</td><td>${o.status==='done'?'<span class="status done">выдан</span>':`<button class="btn sm" data-o="${o.id}">Выдать</button>`}</td></tr>`).join(''):'<tr><td colspan=5>Заказов нет</td></tr>'}</table></div>
+    ${d.orders.length?d.orders.map(o=>`<tr><td>${fmt(o.date)}</td><td>${esc(o.name)}</td><td>${esc(o.item)}</td><td>${num(o.price)}</td><td>${o.status==='done'?'<span class="status done">выдан</span>':`<button class="btn sm" data-o="${o.id}">Выдать</button>`}</td></tr>`).join(''):'<tr><td colspan=5>Заказов нет</td></tr>'}</table></div>
     <div class="panel" style="margin-top:22px"><h3>Товары</h3><table style="margin-top:10px"><tr><th>Товар</th><th>Цена</th><th>Остаток</th><th></th></tr>
     ${d.products.map(p=>`<tr><td>${p.emoji} ${esc(p.name)}</td><td><input type="number" value="${p.price}" data-p="${p.id}" data-f="price" style="width:90px;padding:8px"></td><td><input type="number" value="${p.stock}" data-p="${p.id}" data-f="stock" style="width:90px;padding:8px"></td><td></td></tr>`).join('')}</table>
     <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><input id="np" placeholder="Название нового товара" style="flex:2"><input id="npp" type="number" placeholder="цена" style="flex:1"><button class="btn sm" id="npg">Добавить</button></div></div>
