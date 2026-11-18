@@ -169,9 +169,9 @@ body{padding-bottom:calc(var(--tabbar) + var(--safe-b))}
 .stk{position:absolute;z-index:3;font:600 13px/1 var(--f-head);padding:10px 14px;border-radius:99px;box-shadow:var(--shadow-m);pointer-events:none;transform:translate(calc(var(--mx,0)*var(--k,1)*1px),calc(var(--my,0)*var(--k,1)*1px)) rotate(var(--r,0deg));transition:transform .6s var(--ease)}
 .stk--a{left:-6px;top:0;background:var(--gold);--r:-8deg;--k:-.9}
 .stk--b{right:-6px;top:56px;background:var(--ink);color:#fff;--r:6deg;--k:.7}
-.stk--c{right:-10px;bottom:0;padding:0;background:none;box-shadow:none;--r:10deg;--k:1.1}
+.stk--c{right:6px;bottom:-4px;padding:0;background:none;box-shadow:none;--r:10deg;--k:1.1}
 .stk--c img{width:clamp(64px,10vw,92px);filter:drop-shadow(0 12px 16px #14212b55)}
-@media(min-width:640px){.stk{font-size:15px;padding:12px 18px}.stk--a{left:-24px}.stk--b{right:-18px}.stk--c{right:-24px}}
+@media(min-width:640px){.stk{font-size:15px;padding:12px 18px}.stk--a{left:-24px}.stk--b{right:-18px}.stk--c{right:-18px;bottom:0}}
 /* лента языков */
 .ribbon{background:var(--gold);transform:rotate(-1.6deg);margin:-26px -12px 0;padding:12px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:4;box-shadow:0 12px 30px -14px #14212b66}
 .ribbon div{display:inline-block;animation:mq 42s linear infinite;font:600 clamp(18px,2.6vw,28px)/1 var(--f-head)}
