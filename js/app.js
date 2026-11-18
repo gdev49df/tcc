@@ -164,5 +164,17 @@ function initChat(){
     setTimeout(()=>{typ.classList.remove('on');m.classList.add('show');setTimeout(next,m.classList.contains('win')?0:700)},isT?1100:500)};
   setTimeout(next,500)}
 
-document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();initChat();
+/* ---------- живые мелочи: счётчик 7.0 и параллакс стикеров ---------- */
+function initLive(){
+  const n=document.querySelector('[data-count]');
+  if(n){const to=parseFloat(n.dataset.count),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(still){n.textContent=to.toFixed(1)}else{
+      const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){io.disconnect();const t0=performance.now();
+        const f=t=>{const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);n.textContent=(to*e).toFixed(1);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}},{threshold:.4});io.observe(n)}}
+  const h=document.querySelector('.hero');
+  if(h&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&matchMedia('(pointer:fine)').matches){
+    h.addEventListener('pointermove',e=>{const r=h.getBoundingClientRect();
+      h.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5)*30);h.style.setProperty('--my',((e.clientY-r.top)/r.height-.5)*30)})}}
+
+document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();initChat();initLive();
   document.querySelectorAll('[data-wa]').forEach(a=>a.href=WA)});
