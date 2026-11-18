@@ -82,8 +82,8 @@ function initMarket(){
     const cats=['Все',...new Set(d.products.map(p=>p.cat))];
     document.getElementById('chips').innerHTML=cats.map(c=>`<button class="chip ${c===cat?'on':''}" data-c="${c}">${c}</button>`).join('');
     document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;draw()});
-    root.innerHTML=d.products.filter(p=>cat==='Все'||p.cat===cat).map((p,i)=>`<div class="tk c${i%3}"><div class="l"><div><small>${esc(p.cat)}</small><h3>${esc(p.name)}</h3></div><div class="em">${p.emoji}</div></div>
-      <div class="stub"><div class="price" style="font-size:${String(p.price).length>=7?17:String(p.price).length>=6?21:String(p.price).length>=5?26:32}px">${num(p.price)}${coinI}</div><div class="stock">${p.stock>0?'осталось '+p.stock:'нет в наличии'}</div><button class="btn sm" data-id="${p.id}" ${p.stock<1?'disabled':''}>Купить</button></div></div>`).join('');
+    root.innerHTML=d.products.filter(p=>cat==='Все'||p.cat===cat).map((p,i)=>`<article class="pr g${i%4}${p.stock<1?' out':''}"><div class="pt"><span class="pp">${coinI}<b>${num(p.price)}</b></span><button class="plus" data-id="${p.id}" aria-label="Купить: ${esc(p.name)}" ${p.stock<1?'disabled':''}>+</button></div>
+      <div class="pe" aria-hidden="true">${p.emoji}</div><h3>${esc(p.name)}</h3><p class="ps">${p.stock>0?esc(p.cat)+' · осталось '+p.stock:'нет в наличии'}</p></article>`).join('');
     root.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{
       const id=+b.dataset.id;const go=()=>{const r=DB.buy(id);
         if(r==='ok'){toast('Заказ оформлен! Заберите у администратора');draw();layoutBal()}

@@ -233,3 +233,24 @@ footer.site .sign{margin-top:46px;padding-top:20px;border-top:1px solid #fff3;fo
 html{overflow-x:clip}
 .t-full{grid-column:1/-1}
 .t-full .flw2{height:190px;right:6%}
+
+/* маркет: цветные плитки */
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.pr{border-radius:32px;padding:16px 16px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--ink);transition:transform .45s var(--spring);position:relative}
+.pr:hover{transform:translateY(-6px)}
+.pr.g0{background:linear-gradient(160deg,#ffe27a,#fbc93a)}
+.pr.g1{background:linear-gradient(160deg,#6cb4ff,#2f8cff);color:#fff}
+.pr.g2{background:linear-gradient(160deg,#c995ec,#a468d8);color:#fff}
+.pr.g3{background:linear-gradient(160deg,#52e8b4,#18c98d)}
+.pr .pt{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pr .pp{display:inline-flex;align-items:center;gap:8px;background:#ffffff59;padding:6px 14px 6px 6px;border-radius:99px;font:600 15px 'Unbounded',sans-serif;letter-spacing:-.02em;min-width:0}
+.pr .pp .coin{width:30px;height:30px}
+.pr .pp b{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.pr .plus{width:44px;height:44px;flex:none;border-radius:50%;border:0;background:#ffffff59;color:inherit;font:600 26px/1 'Onest';cursor:pointer;transition:transform .35s var(--spring),background .2s}
+.pr .plus:hover{background:#fff;color:var(--ink);transform:rotate(90deg) scale(1.08)}
+.pr .plus:active{transform:scale(.88);transition-duration:.08s}
+.pr .plus[disabled]{opacity:.35;pointer-events:none}
+.pr .pe{font-size:96px;line-height:1;margin:22px 0 14px;filter:drop-shadow(0 14px 14px #14212b33)}
+.pr h3{font-size:18px;line-height:1.25;padding:0 6px;min-height:2.5em;display:grid;align-items:center}
+.pr .ps{font-size:13px;opacity:.85;margin-top:6px}
+.pr.out{filter:grayscale(1);opacity:.6}
