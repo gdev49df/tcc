@@ -4,8 +4,8 @@ const PAGES = [
   ['index.html','Главная'],['about.html','О нас'],['courses.html','Курсы'],
   ['events.html','Клубы и события'],['coins.html','Коины'],['market.html','Маркет'],['contacts.html','Контакты']
 ];
-const LOGO = 'assets/logo.svg';
-const LOGO_W = 'assets/logo-white.svg';
+const LOGO = 'assets/logo.png';
+const LOGO_W = 'assets/logo-inv.png';
 
 /* ---------- данные (localStorage; для боевой версии заменить на worker/d1) ---------- */
 const SEED = {
@@ -43,7 +43,7 @@ const DB = {
 };
 const fmt=t=>new Date(t).toLocaleDateString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const coinI=`<span class="coin"><img src="${LOGO_W}" alt=""></span>`;
+const coinI=`<span class="coin"><img src="assets/coin.png" alt=""></span>`;
 
 function toast(msg){let t=document.querySelector('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}
   t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}
@@ -55,7 +55,7 @@ function layout(){
   document.body.insertAdjacentHTML('afterbegin',`<header class="site"><div class="wrap">
     <a class="brand" href="index.html"><img src="${LOGO}" alt="">The Crocus Community</a>
     <nav class="main" id="nav">${PAGES.map(([h,n])=>`<a href="${h}" class="${h===cur?'on':''}">${n}</a>`).join('')}
-      <a href="cabinet.html" class="${cur==='cabinet.html'?'on':''}">${me?'Кабинет · '+esc(me.balance):'Войти'}</a></nav>
+      <a href="cabinet.html" class="me">${me?'Кабинет · '+esc(me.balance):'Войти'}</a></nav>
     <button class="burger" aria-label="меню" onclick="document.getElementById('nav').classList.toggle('open')"><i></i><i></i></button></div></header>`);
   document.body.insertAdjacentHTML('beforeend',`<footer class="site"><div class="wrap"><div class="cols">
     <div><div class="brand"><img src="${LOGO_W}" alt="">The Crocus Community</div>
@@ -91,31 +91,29 @@ function initMarket(){
     const cats=['Все',...new Set(d.products.map(p=>p.cat))];
     document.getElementById('chips').innerHTML=cats.map(c=>`<button class="chip ${c===cat?'on':''}" data-c="${c}">${c}</button>`).join('');
     document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;draw()});
-    root.innerHTML=d.products.filter(p=>cat==='Все'||p.cat===cat).map(p=>`<div class="card prod"><div class="pic" style="background:${['#ffe9a8','#d9dcff','#ffd3d6'][p.id%3]}">${p.emoji}</div>
-      <div class="body"><span class="pill">${esc(p.cat)}</span><h3>${esc(p.name)}</h3>
-      <div class="foot"><div><div class="price">${coinI} ${p.price}</div><div class="stock">${p.stock>0?'осталось '+p.stock:'нет в наличии'}</div></div>
-      <button class="btn red sm" data-id="${p.id}" ${p.stock<1?'disabled':''}>Купить</button></div></div></div>`).join('');
+    root.innerHTML=d.products.filter(p=>cat==='Все'||p.cat===cat).map((p,i)=>`<div class="tk c${i%3}"><div class="l"><div><small>${esc(p.cat)}</small><h3>${esc(p.name)}</h3></div><div class="em">${p.emoji}</div></div>
+      <div class="stub"><div class="price">${p.price}${coinI}</div><div class="stock">${p.stock>0?'осталось '+p.stock:'нет в наличии'}</div><button class="btn sm" data-id="${p.id}" ${p.stock<1?'disabled':''}>Купить</button></div></div>`).join('');
     root.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{
       const id=+b.dataset.id;const go=()=>{const r=DB.buy(id);
         if(r==='ok'){toast('Заказ оформлен! Заберите у администратора');draw();layoutBal()}
         else if(r==='money')toast('Не хватает коинов');else if(r==='stock')toast('Товар закончился');else loginModal(go)};
       go()})};
   draw()}
-function layoutBal(){const me=DB.user();const a=document.querySelector('nav.main a:last-child');if(a&&me)a.textContent='Кабинет · '+me.balance}
+function layoutBal(){const me=DB.user();const a=document.querySelector('nav.main a.me');if(a&&me)a.textContent='Кабинет · '+me.balance}
 
 /* ---------- кабинет ---------- */
 function initCabinet(){
   const root=document.getElementById('cab');if(!root)return;
   const draw=()=>{const me=DB.user();
-    if(!me){root.innerHTML=`<div class="card" style="max-width:460px"><h3>Вход по коду студента</h3><label>Код</label><input id="cc" placeholder="TCC-1001"><button class="btn red" id="cg" style="margin-top:18px">Войти</button></div>`;
+    if(!me){root.innerHTML=`<div class="panel" style="max-width:460px"><h3>Вход по коду студента</h3><label>Код</label><input id="cc" placeholder="TCC-1001"><button class="btn red" id="cg" style="margin-top:18px">Войти</button></div>`;
       const go=()=>{const s=DB.login(document.getElementById('cc').value);s?location.reload():toast('Код не найден')};
       document.getElementById('cg').onclick=go;document.getElementById('cc').onkeydown=e=>e.key==='Enter'&&go();return}
     const d=DB.get(),tx=d.tx.filter(t=>t.code===me.code),ord=d.orders.filter(o=>o.code===me.code);
-    root.innerHTML=`<div class="grid g2"><div class="card"><span class="pill">${me.code}</span><h2 style="margin:12px 0">${esc(me.name)}</h2>
-      <div class="display" style="font-size:64px;color:var(--red)">${me.balance} ${coinI}</div>
+    root.innerHTML=`<div class="g2"><div class="panel"><b>${me.code}</b><h3 style="margin:12px 0 8px">${esc(me.name)}</h3>
+      <div class="cabnum">${me.balance} ${coinI}</div>
       <div style="margin-top:20px;display:flex;gap:10px"><a class="btn blue sm" href="market.html">В маркет</a><button class="btn ghost sm" id="lo">Выйти</button></div></div>
-      <div class="card"><h3>Мои заказы</h3><table style="margin-top:10px">${ord.length?ord.map(o=>`<tr><td>${esc(o.item)}</td><td>${o.price}</td><td><span class="status ${o.status==='done'?'done':''}">${o.status==='done'?'выдан':'новый'}</span></td></tr>`).join(''):'<tr><td>Пока пусто</td></tr>'}</table></div></div>
-      <div class="card" style="margin-top:22px"><h3>История коинов</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Причина</th><th>Коины</th></tr>
+      <div class="panel"><h3>Мои заказы</h3><table style="margin-top:10px">${ord.length?ord.map(o=>`<tr><td>${esc(o.item)}</td><td>${o.price}</td><td><span class="status ${o.status==='done'?'done':''}">${o.status==='done'?'выдан':'новый'}</span></td></tr>`).join(''):'<tr><td>Пока пусто</td></tr>'}</table></div></div>
+      <div class="panel" style="margin-top:22px"><h3>История коинов</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Причина</th><th>Коины</th></tr>
       ${tx.length?tx.map(t=>`<tr><td>${fmt(t.date)}</td><td>${esc(t.reason)}</td><td class="${t.amount>0?'plus':'minus'}">${t.amount>0?'+':''}${t.amount}</td></tr>`).join(''):'<tr><td colspan=3>Операций пока нет</td></tr>'}</table></div>`;
     document.getElementById('lo').onclick=()=>{DB.setMe(null);location.reload()}};
   draw()}
@@ -126,21 +124,21 @@ function initAdmin(){
   const root=document.getElementById('adm');if(!root)return;
   const ok=()=>{try{return sessionStorage.getItem('tcc_adm')==='1'}catch(e){return false}};
   const draw=()=>{
-    if(!ok()){root.innerHTML=`<div class="card" style="max-width:420px"><h3>Вход для преподавателей</h3><label>Пароль</label><input id="ap" type="password"><button class="btn red" id="ag" style="margin-top:18px">Войти</button></div>`;
+    if(!ok()){root.innerHTML=`<div class="panel" style="max-width:420px"><h3>Вход для преподавателей</h3><label>Пароль</label><input id="ap" type="password"><button class="btn red" id="ag" style="margin-top:18px">Войти</button></div>`;
       const go=()=>{if(document.getElementById('ap').value===ADMIN_PASS){try{sessionStorage.setItem('tcc_adm','1')}catch(e){}draw()}else toast('Неверный пароль')};
       document.getElementById('ag').onclick=go;document.getElementById('ap').onkeydown=e=>e.key==='Enter'&&go();return}
     const d=DB.get();
-    root.innerHTML=`<div class="grid g2">
-    <div class="card"><h3>Начислить / списать коины</h3>
+    root.innerHTML=`<div class="g2">
+    <div class="panel"><h3>Начислить / списать коины</h3>
       <label>Студент</label><select id="as">${d.students.map(s=>`<option value="${s.code}">${esc(s.name)} · ${s.code} · ${s.balance}</option>`).join('')}</select>
       <label>Количество (минус — списать)</label><input id="aa" type="number" value="10">
       <label>Причина</label><select id="ar"><option>Посещение занятия</option><option>Домашнее задание</option><option>Победа в клубе</option><option>Активность</option><option>Другое</option></select>
       <button class="btn red" id="ago" style="margin-top:18px">Применить</button></div>
-    <div class="card"><h3>Новый студент</h3><label>Имя</label><input id="sn"><label>Код (оставьте пустым — создастся сам)</label><input id="sc" placeholder="TCC-1004">
+    <div class="panel"><h3>Новый студент</h3><label>Имя</label><input id="sn"><label>Код (оставьте пустым — создастся сам)</label><input id="sc" placeholder="TCC-1004">
       <button class="btn blue" id="sgo" style="margin-top:18px">Добавить</button></div></div>
-    <div class="card" style="margin-top:22px"><h3>Заказы</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Студент</th><th>Товар</th><th>Цена</th><th></th></tr>
+    <div class="panel" style="margin-top:22px"><h3>Заказы</h3><table style="margin-top:10px"><tr><th>Дата</th><th>Студент</th><th>Товар</th><th>Цена</th><th></th></tr>
     ${d.orders.length?d.orders.map(o=>`<tr><td>${fmt(o.date)}</td><td>${esc(o.name)}</td><td>${esc(o.item)}</td><td>${o.price}</td><td>${o.status==='done'?'<span class="status done">выдан</span>':`<button class="btn sm" data-o="${o.id}">Выдать</button>`}</td></tr>`).join(''):'<tr><td colspan=5>Заказов нет</td></tr>'}</table></div>
-    <div class="card" style="margin-top:22px"><h3>Товары</h3><table style="margin-top:10px"><tr><th>Товар</th><th>Цена</th><th>Остаток</th><th></th></tr>
+    <div class="panel" style="margin-top:22px"><h3>Товары</h3><table style="margin-top:10px"><tr><th>Товар</th><th>Цена</th><th>Остаток</th><th></th></tr>
     ${d.products.map(p=>`<tr><td>${p.emoji} ${esc(p.name)}</td><td><input type="number" value="${p.price}" data-p="${p.id}" data-f="price" style="width:90px;padding:8px"></td><td><input type="number" value="${p.stock}" data-p="${p.id}" data-f="stock" style="width:90px;padding:8px"></td><td></td></tr>`).join('')}</table>
     <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><input id="np" placeholder="Название нового товара" style="flex:2"><input id="npp" type="number" placeholder="цена" style="flex:1"><button class="btn sm" id="npg">Добавить</button></div></div>
     <p style="margin-top:20px"><button class="btn ghost sm" id="aout">Выйти</button></p>`;
@@ -155,5 +153,33 @@ function initAdmin(){
     document.getElementById('aout').onclick=()=>{try{sessionStorage.removeItem('tcc_adm')}catch(e){}draw()}};
   draw()}
 
-document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();
+/* ---------- коин в герое: схватить, бросить, закинуть в копилку ---------- */
+function initCoin(){
+  const coin=document.getElementById('coin'),jar=document.getElementById('jar'),host=document.getElementById('poster');if(!coin||!host)return;
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let x=0,y=0,vx=0,vy=0,rot=0,raf=0,hist=[],drag=false,off={x:0,y:0},count=0,home={x:0,y:0};
+  const put=()=>{coin.style.transform=`translate3d(${x}px,${y}px,0) rotate(${rot}deg)`};
+  const bounds=()=>{const h=host.getBoundingClientRect(),c=coin.getBoundingClientRect();return{h,c,minX:-(c.left-x-h.left),maxX:h.right-(c.right-x),minY:-(c.top-y-h.top),maxY:h.bottom-(c.bottom-y)}};
+  const overJar=()=>{const a=coin.getBoundingClientRect(),b=jar.getBoundingClientRect();const dx=(a.left+a.width/2)-(b.left+b.width/2),dy=(a.top+a.height/2)-(b.top+b.height/2);return Math.hypot(dx,dy)<b.width/2};
+  const scored=()=>{count+=10;jar.querySelector('b').textContent=count;jar.classList.add('hot');setTimeout(()=>jar.classList.remove('hot'),350);vx=vy=0;
+    // возврат на место: критически демпфированная пружина
+    let px=x,py=y,t0=performance.now();const w=9;
+    const back=n=>{const t=(n-t0)/1000,k=Math.exp(-w*t)*(1+w*t);x=(px)*k;y=(py)*k;rot*=.9;put();if(t<1.2)raf=requestAnimationFrame(back);else{x=y=0;rot=0;put()}};
+    cancelAnimationFrame(raf);raf=requestAnimationFrame(back)};
+  const fly=()=>{let last=performance.now();
+    const step=n=>{const dt=Math.min(.032,(n-last)/1000);last=n;const f=Math.pow(.12,dt);vx*=f;vy*=f;x+=vx*dt;y+=vy*dt;rot+=vx*dt*.4;
+      const B=bounds();if(x<B.minX){x=B.minX;vx=-vx*.6}if(x>B.maxX){x=B.maxX;vx=-vx*.6}if(y<B.minY){y=B.minY;vy=-vy*.6}if(y>B.maxY){y=B.maxY;vy=-vy*.6}
+      put();if(overJar()&&Math.hypot(vx,vy)<700){scored();return}
+      if(Math.hypot(vx,vy)>12)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)};
+  coin.addEventListener('pointerdown',e=>{cancelAnimationFrame(raf);drag=true;coin.setPointerCapture(e.pointerId);
+    off={x:e.clientX-x,y:e.clientY-y};hist=[{t:e.timeStamp,x:e.clientX,y:e.clientY}]});
+  coin.addEventListener('pointermove',e=>{if(!drag)return;x=e.clientX-off.x;y=e.clientY-off.y;
+    const B=bounds();x=Math.min(B.maxX,Math.max(B.minX,x));y=Math.min(B.maxY,Math.max(B.minY,y));
+    hist.push({t:e.timeStamp,x:e.clientX,y:e.clientY});hist=hist.filter(p=>e.timeStamp-p.t<90);put();jar.classList.toggle('hot',overJar())});
+  const up=e=>{if(!drag)return;drag=false;jar.classList.remove('hot');
+    const a=hist[0],b=hist[hist.length-1];const dt=Math.max(16,(b.t-a.t));vx=(b.x-a.x)/dt*1000;vy=(b.y-a.y)/dt*1000;
+    if(overJar()&&Math.hypot(vx,vy)<900){scored();return}if(still){return}fly()};
+  coin.addEventListener('pointerup',up);coin.addEventListener('pointercancel',up)}
+
+document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();initCoin();
   document.querySelectorAll('[data-wa]').forEach(a=>a.href=WA)});
