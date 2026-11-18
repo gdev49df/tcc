@@ -153,33 +153,16 @@ function initAdmin(){
     document.getElementById('aout').onclick=()=>{try{sessionStorage.removeItem('tcc_adm')}catch(e){}draw()}};
   draw()}
 
-/* ---------- коин в герое: схватить, бросить, закинуть в копилку ---------- */
-function initCoin(){
-  const coin=document.getElementById('coin'),jar=document.getElementById('jar'),host=document.getElementById('poster');if(!coin||!host)return;
-  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let x=0,y=0,vx=0,vy=0,rot=0,raf=0,hist=[],drag=false,off={x:0,y:0},count=0,home={x:0,y:0};
-  const put=()=>{coin.style.transform=`translate3d(${x}px,${y}px,0) rotate(${rot}deg)`};
-  const bounds=()=>{const h=host.getBoundingClientRect(),c=coin.getBoundingClientRect();return{h,c,minX:-(c.left-x-h.left),maxX:h.right-(c.right-x),minY:-(c.top-y-h.top),maxY:h.bottom-(c.bottom-y)}};
-  const overJar=()=>{const a=coin.getBoundingClientRect(),b=jar.getBoundingClientRect();const dx=(a.left+a.width/2)-(b.left+b.width/2),dy=(a.top+a.height/2)-(b.top+b.height/2);return Math.hypot(dx,dy)<b.width/2};
-  const scored=()=>{count+=10;jar.querySelector('b').textContent=count;jar.classList.add('hot');setTimeout(()=>jar.classList.remove('hot'),350);vx=vy=0;
-    // возврат на место: критически демпфированная пружина
-    let px=x,py=y,t0=performance.now();const w=9;
-    const back=n=>{const t=(n-t0)/1000,k=Math.exp(-w*t)*(1+w*t);x=(px)*k;y=(py)*k;rot*=.9;put();if(t<1.2)raf=requestAnimationFrame(back);else{x=y=0;rot=0;put()}};
-    cancelAnimationFrame(raf);raf=requestAnimationFrame(back)};
-  const fly=()=>{let last=performance.now();
-    const step=n=>{const dt=Math.min(.032,(n-last)/1000);last=n;const f=Math.pow(.12,dt);vx*=f;vy*=f;x+=vx*dt;y+=vy*dt;rot+=vx*dt*.4;
-      const B=bounds();if(x<B.minX){x=B.minX;vx=-vx*.6}if(x>B.maxX){x=B.maxX;vx=-vx*.6}if(y<B.minY){y=B.minY;vy=-vy*.6}if(y>B.maxY){y=B.maxY;vy=-vy*.6}
-      put();if(overJar()&&Math.hypot(vx,vy)<700){scored();return}
-      if(Math.hypot(vx,vy)>12)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)};
-  coin.addEventListener('pointerdown',e=>{cancelAnimationFrame(raf);drag=true;coin.setPointerCapture(e.pointerId);
-    off={x:e.clientX-x,y:e.clientY-y};hist=[{t:e.timeStamp,x:e.clientX,y:e.clientY}]});
-  coin.addEventListener('pointermove',e=>{if(!drag)return;x=e.clientX-off.x;y=e.clientY-off.y;
-    const B=bounds();x=Math.min(B.maxX,Math.max(B.minX,x));y=Math.min(B.maxY,Math.max(B.minY,y));
-    hist.push({t:e.timeStamp,x:e.clientX,y:e.clientY});hist=hist.filter(p=>e.timeStamp-p.t<90);put();jar.classList.toggle('hot',overJar())});
-  const up=e=>{if(!drag)return;drag=false;jar.classList.remove('hot');
-    const a=hist[0],b=hist[hist.length-1];const dt=Math.max(16,(b.t-a.t));vx=(b.x-a.x)/dt*1000;vy=(b.y-a.y)/dt*1000;
-    if(overJar()&&Math.hypot(vx,vy)<900){scored();return}if(still){return}fly()};
-  coin.addEventListener('pointerup',up);coin.addEventListener('pointercancel',up)}
+/* ---------- диалог в герое: появляется по очереди ---------- */
+function initChat(){
+  const box=document.getElementById('chat');if(!box)return;
+  const msgs=[...box.querySelectorAll('.msg')],typ=box.querySelector('.typing');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){msgs.forEach(m=>m.classList.add('show'));return}
+  let i=0;const next=()=>{if(i>=msgs.length){typ.classList.remove('on');return}
+    const m=msgs[i++],isT=m.classList.contains('t');
+    if(isT){box.insertBefore(typ,m);typ.classList.add('on')}
+    setTimeout(()=>{typ.classList.remove('on');m.classList.add('show');setTimeout(next,m.classList.contains('win')?0:700)},isT?1100:500)};
+  setTimeout(next,500)}
 
-document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();initCoin();
+document.addEventListener('DOMContentLoaded',()=>{layout();reveal();initMarket();initCabinet();initAdmin();initChat();
   document.querySelectorAll('[data-wa]').forEach(a=>a.href=WA)});
