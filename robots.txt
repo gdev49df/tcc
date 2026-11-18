@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /tcc/admin.html
+Sitemap: https://gdev49df.github.io/tcc/sitemap.xml

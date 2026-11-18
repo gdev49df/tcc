@@ -1,0 +1,18 @@
+---
+title: Маркет — The Crocus Community
+desc: Маркет за крокус-коины: техника, спорт, одежда, канцелярия и сладости для студентов The Crocus Community.
+page: market
+nav: market.html
+---
+<section class="phead"><div class="wrap"><nav class="crumbs" aria-label="Навигация"><a href="index.html">Главная</a><span aria-hidden="true">/</span><span aria-current="page">Маркет</span></nav><h1>Маркет</h1><p class="lead">Техника, спорт, одежда, канцелярия и сладости за заработанные коины.</p></div><img class="phead__flw" src="assets/crocus.svg" alt="" width="200" height="290"></section>
+<section class="sec" style="padding-top:clamp(24px,4vw,48px)"><div class="wrap">
+  <div class="wallet wallet--guest" id="wallet" aria-live="polite"></div>
+  <div class="shopbar">
+    <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><label class="sr" for="q">Поиск товара</label><input class="input" id="q" type="search" placeholder="Найти товар" autocomplete="off" enterkeyhint="search"></div>
+    <div><label class="sr" for="sort">Сортировка</label><select class="select" id="sort"><option value="popular">Популярные</option><option value="cheap">Дешевле</option><option value="expensive">Дороже</option><option value="afford">Могу купить</option></select></div>
+  </div>
+  <div class="hscroll cats" id="cats" aria-label="Категории"></div>
+  <p class="muted" id="count" aria-live="polite" style="margin:-8px 0 14px;font-size:14px"></p>
+  <div class="grid-shop" id="shop"></div>
+  <div class="empty" id="empty" hidden><b>Ничего не нашли</b><p class="muted">Попробуй другое слово или сбрось фильтр.</p><button class="btn btn--soft" id="reset">Сбросить</button></div>
+</div></section>
